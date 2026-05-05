@@ -1,0 +1,65 @@
+<div class="relative min-h-[80vh] flex flex-col lg:flex-row items-center gap-12 lg:gap-20 px-4 py-10">
+    
+    <div class="flex-1 order-2 lg:order-1 space-y-10">
+        <div class="space-y-2">
+            <p class="text-slate-500 font-bold uppercase tracking-[0.3em] text-[10px]">Creative Portfolio — 2026</p>
+            <h2 class="text-6xl md:text-8xl xl:text-[9rem] font-[900] uppercase leading-[0.85] tracking-tighter text-white italic lg:not-italic">
+                HELLO, I'M <br>
+                <span class="text-white">ABDUL</span><br>
+                <span class="text-white">MUHAMAD</span>
+                <span class="text-white">NASIR</span>
+
+            </h2>
+        </div>
+
+        <div class="max-w-md space-y-6">
+            <p class="text-slate-400 text-sm leading-relaxed uppercase tracking-wide italic">
+                Saya mendeskripsikan diri saya sebagai individu yang adaptif dengan perhatian besar terhadap detail. Saya terbiasa bekerja dalam lingkungan yang menuntut presisi tinggi, di mana integritas data dan keteraturan menjadi prioritas utama.
+                 Selain fokus pada aspek fungsional, saya juga memiliki apresiasi tinggi terhadap estetika minimalis dan efisiensi kerja, yang membantu saya tetap produktif dan terorganisir di berbagai situasi.
+            </p>
+            
+            <div class="grid grid-cols-2 gap-8 border-t border-white/10 pt-8">
+                <div>
+                    <p class="text-blue-600 font-black text-4xl">100%</p>
+                    <p class="text-[10px] uppercase font-bold opacity-50 tracking-widest">WIN RATE PUASA</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-8 text-[10px] font-bold uppercase tracking-widest opacity-40">
+            <a href="https://maps.app.goo.gl/KUPHEtyXy2mEAWEr6?g_st=ac" class="hover:text-blue-500 transition-colors">Sumedang, Indonesia</a>
+        </div>
+    </div>
+
+    <div class="relative shrink-0 order-1 lg:order-2">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/2 w-[110%] h-[110%] bg-white/10 rounded-full z-0 opacity-100 shadow-[0_0_60px_rgba(255,255,255,0.25)]"></div>        
+        <div class="relative z-10 w-64 h-80 md:w-80 md:h-[32rem] lg:w-[28rem] lg:h-[38rem] overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 ease-in-out">
+            <img src="foto.png" alt="Abdul Mansur" class="w-full h-full object-cover object-top scale-110">
+        </div>
+
+        <div id="realtime-clock" class="absolute top-0 right-0 -translate-y-10 text-[10px] font-black uppercase tracking-[0.3em] opacity-30 hidden lg:block">
+        </div>   
+     </div>
+
+</div>
+<script>
+    $(document).ready(function() {
+        function updateClock() {
+            const now = new Date();
+            
+            const options = { 
+                month: 'long', 
+                day: '2-digit', 
+                year: 'numeric' 
+            };
+            
+            const timeString = now.toLocaleDateString('en-US', options);
+            
+            $('#realtime-clock').text(timeString);
+        }
+
+        updateClock();
+        
+        setInterval(updateClock, 1000);
+    });
+</script>

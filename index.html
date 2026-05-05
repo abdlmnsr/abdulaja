@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdlmnsr | Portfolio 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Link Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Theme Color untuk Mobile Browser -->
+    <meta name="theme-color" content="#3b82f6">
+    <!-- iOS Support -->
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1006/1006363.png">
+    
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Background Glow Effects */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 20% 80%, rgba(29, 78, 216, 0.1) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        /* Menu Items Style */
+        .nav-item {
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+            font-size: 0.75rem;
+        }
+        .nav-item.active, .nav-item:hover {
+            opacity: 1;
+            color: #3b82f6;
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Animasi Konten */
+        .content-frame {
+            animation: slideIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        /* Mobile Menu Overlay - State Awal Tersembunyi */
+        #mobile-menu {
+            display: none; 
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(15px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <nav class="fixed top-0 left-0 w-full z-[110] p-6 md:p-8 flex justify-between items-center bg-gradient-to-b from-black/90 to-transparent">
+        <div class="text-xl md:text-2xl font-black tracking-tighter">AMN<span class="text-blue-600">.</span></div>
+        
+        <div id="main-nav" class="hidden md:flex gap-10">
+            <a href="home.html" class="nav-item active">Home</a>
+            <a href="about.html" class="nav-item">About</a>
+            <a href="github.html" class="nav-item">Project</a>
+            <a href="skills.html" class="nav-item">Skills</a>
+            <a href="experience.html" class="nav-item">Experience</a>
+            <a href="education.html" class="nav-item">Educations</a>
+            <a href="certificates.html" class="nav-item">Certificates</a>
+            <a href="friends.html" class="nav-item">Friends</a>
+            <a href="contact.html" class="nav-item">Contact</a>
+        </div>
+
+        <button id="hamburger" class="md:hidden flex flex-col gap-1.5 z-[120] p-2">
+            <span class="w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+            <span class="w-6 h-0.5 bg-white transition-all duration-300"></span>
+            <span class="w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+        </button>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 z-[105] flex-col items-center justify-center gap-10">
+        <a href="home.html" class="nav-item active">Home</a>
+        <a href="about.html" class="nav-item">About</a>
+        <a href="github.html" class="nav-item">Project</a>
+        <a href="skills.html" class="nav-item">Skills</a>
+        <a href="experience.html" class="nav-item">Experience</a>
+        <a href="education.html" class="nav-item">Educations</a>
+        <a href="certificates.html" class="nav-item">Certificates</a>
+        <a href="friends.html" class="nav-item">Friends</a>
+        <a href="contact.html" class="nav-item">Contact</a>
+</div>
+
+    <main class="min-h-screen flex items-center justify-center px-4 md:px-6 pt-32 pb-12">
+        <div id="content-area" class="w-full max-w-6xl content-frame">
+            </div>
+    </main>
+
+    <script>
+        $(document).ready(function() {
+            // 1. Fungsi Utama Load Page
+            function loadPage(url) {
+                console.log("Memasuki sistem:", url);
+                $('#content-area').fadeOut(200, function() {
+                    $(this).load(url, function(response, status, xhr) {
+                        if (status == "error") {
+                            $(this).html("<div class='text-center border border-red-500/50 p-10 rounded-2xl bg-red-500/10'><h2 class='text-red-500 font-black italic text-2xl'>CRITICAL ERROR</h2><p class='text-xs opacity-50 mt-2 uppercase tracking-widest'>Gagal memuat " + url + "</p></div>");
+                        }
+                        $(this).fadeIn(400);
+                        window.scrollTo(0, 0);
+                    });
+                });
+            }
+
+            // 2. Kontrol Hamburger & Mobile Menu
+            function toggleMenu() {
+                const menu = $('#mobile-menu');
+                const isHidden = menu.css('display') === 'none';
+
+                if (isHidden) {
+                    menu.css('display', 'flex').hide().fadeIn(300);
+                    $('body').css('overflow', 'hidden'); // Kunci scroll
+                } else {
+                    menu.fadeOut(300, function() {
+                        $(this).css('display', 'none');
+                    });
+                    $('body').css('overflow', 'auto'); // Lepas scroll
+                }
+
+                // Animasi Icon Hamburger
+                $('#hamburger span:nth-child(1)').toggleClass('rotate-45 translate-y-2');
+                $('#hamburger span:nth-child(2)').toggleClass('opacity-0');
+                $('#hamburger span:nth-child(3)').toggleClass('-rotate-45 -translate-y-2');
+            }
+
+            // 3. Event Listeners
+            $('#hamburger').click(function() {
+                toggleMenu();
+            });
+
+            // Navigasi Link (Desktop & Mobile)
+            $('#main-nav a, #mobile-menu a').click(function(e) {
+                e.preventDefault();
+                const url = $(this).attr('href');
+
+                // Update Active State
+                $('.nav-item').removeClass('active');
+                $(`a[href="${url}"]`).addClass('active');
+
+                // Tutup menu jika sedang di mobile
+                if ($('#mobile-menu').css('display') !== 'none') {
+                    toggleMenu();
+                }
+
+                loadPage(url);
+            });
+
+            // 4. Initial Load
+            loadPage('home.html');
+        });
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker terdaftar!', reg))
+                    .catch(err => console.log('Registrasi gagal:', err));
+            });
+        }
+    </script>
+</body>
+</html>

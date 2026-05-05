@@ -1,0 +1,61 @@
+<div class="space-y-12">
+    <div class="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-white/10 pb-8">
+        <div>
+            <h2 class="text-6xl font-black uppercase tracking-tighter">RECAP <span class="text-blue-600">PROJECT</span></h2>
+            <p class="text-slate-400 mt-2 uppercase tracking-[0.3em] text-xs font-bold">Fetched from GitHub API</p>
+        </div>
+        <div class="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/10">
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span class="text-[10px] font-bold uppercase tracking-widest opacity-70">Live Connection</span>
+        </div>
+    </div>
+
+    <div id="github-projects" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="col-span-full py-20 text-center">
+            <div class="inline-block w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+            <p class="mt-4 text-xs font-bold uppercase tracking-widest opacity-50">Syncing Repositories...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    const username = 'abdlmnsr'; // Username kamu
+    const projectContainer = $('#github-projects');
+
+    $.ajax({
+        url: "https://api.github.com/users/" + username + "/repos?sort=updated&per_page=6",
+        method: "GET",
+        dataType: "json",
+        success: function(repos) {
+            let cards = "";
+            
+            if (repos.length === 0) {
+                projectContainer.html('<p class="col-span-full text-center opacity-50 uppercase text-xs">No public projects found.</p>');
+                return;
+            }
+
+            repos.forEach(function(repo) {
+                const description = repo.description || "Project akuntansi dan teknologi terintegrasi.";
+                const language = repo.language || "Web Stack";
+
+                // Menggunakan penggabungan string biasa agar tidak error di browser lama
+                cards += '<a href="' + repo.html_url + '" target="_blank" class="group relative bg-white/5 border border-white/10 p-6 rounded-3xl hover:bg-blue-600/10 hover:border-blue-600/50 transition-all duration-500">';
+                cards += '  <div class="flex justify-between items-start mb-6">';
+                cards += '    <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-blue-600 transition-colors text-white">#</div>';
+                cards += '    <span class="text-[10px] font-black text-blue-500 uppercase">' + language + '</span>';
+                cards += '  </div>';
+                cards += '  <h3 class="text-xl font-bold mb-2 uppercase">' + repo.name + '</h3>';
+                cards += '  <p class="text-slate-400 text-xs line-clamp-2 mb-6">' + description + '</p>';
+                cards += '  <div class="flex gap-4 opacity-50 text-[10px] font-bold"><span>⭐ ' + repo.stargazers_count + '</span><span>🍴 ' + repo.forks_count + '</span></div>';
+                cards += '</a>';
+            });
+
+            projectContainer.html(cards);
+        },
+        error: function() {
+            projectContainer.html('<p class="col-span-full text-center text-red-500 font-bold uppercase text-xs">FAILED TO CONNECT TO GITHUB API.</p>');
+        }
+    });
+});
+</script>
